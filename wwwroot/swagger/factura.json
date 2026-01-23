@@ -1,0 +1,3037 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "MinSalud.SIIFA.API.Factura",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://siifa.sispropreprod.gov.co/siifafac"
+    }
+  ],
+  "paths": {
+    "/api/Factura": {
+      "get": {
+        "tags": [
+          "Factura"
+        ],
+        "parameters": [
+          {
+            "name": "idFactura",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "numeroFactura",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nitEmisor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nitAdquiriente",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fechaEmisionInicio",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "fechaEmisionFinal",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "numeroPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "registrosPorPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/{IdFactura}": {
+      "get": {
+        "tags": [
+          "Factura"
+        ],
+        "parameters": [
+          {
+            "name": "IdFactura",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Factura/Alerta/{IdFactura}": {
+      "get": {
+        "tags": [
+          "Factura"
+        ],
+        "parameters": [
+          {
+            "name": "IdFactura",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetAlertaFacturaQuery_Result"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetAlertaFacturaQuery_Result"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetAlertaFacturaQuery_Result"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FacturaRadicado/{IdFacturaRadicado}": {
+      "get": {
+        "tags": [
+          "FacturaRadicado"
+        ],
+        "parameters": [
+          {
+            "name": "IdFacturaRadicado",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.FacturaRadicado.DetailFacturaRadicado_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.FacturaRadicado.DetailFacturaRadicado_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.FacturaRadicado.DetailFacturaRadicado_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FacturaRadicado/ByIdFactura/{IdFactura}": {
+      "get": {
+        "tags": [
+          "FacturaRadicado"
+        ],
+        "parameters": [
+          {
+            "name": "IdFactura",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.FacturaRadicado.GetFacturaRadicadoByIdFactura_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.FacturaRadicado.GetFacturaRadicadoByIdFactura_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.FacturaRadicado.GetFacturaRadicadoByIdFactura_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FacturaRadicado": {
+      "post": {
+        "tags": [
+          "FacturaRadicado"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicado_Command"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicado_Command"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicado_Command"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicado_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicado_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicado_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FacturaRadicado/Masivo": {
+      "post": {
+        "tags": [
+          "FacturaRadicado"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Command"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Command"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Command"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RipsTransaccion": {
+      "get": {
+        "tags": [
+          "RipsTransaccion"
+        ],
+        "parameters": [
+          {
+            "name": "idFactura",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "numeroDocumentoIdObligado",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "numeroFactura",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "numeroPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "registrosPorPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListTransaccionByIdFactura_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListTransaccionByIdFactura_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListTransaccionByIdFactura_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RipsUsuarios": {
+      "get": {
+        "tags": [
+          "RipsUsuarios"
+        ],
+        "parameters": [
+          {
+            "name": "idTransaccion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "numeroDocumentoIdentificacion",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "numeroPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "registrosPorPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListUsuariosByIdTransaccion_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListUsuariosByIdTransaccion_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListUsuariosByIdTransaccion_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RipsUsuarios/{IdUsuario}": {
+      "get": {
+        "tags": [
+          "RipsUsuarios"
+        ],
+        "parameters": [
+          {
+            "name": "IdUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SeguimientoFacturaGlosa/{IdSeguimientoFacturaGlosa}": {
+      "get": {
+        "tags": [
+          "SeguimientoFacturaGlosa"
+        ],
+        "parameters": [
+          {
+            "name": "IdSeguimientoFacturaGlosa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.DetailSeguimientoFacturaGlosa_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.DetailSeguimientoFacturaGlosa_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.DetailSeguimientoFacturaGlosa_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SeguimientoFacturaGlosa/ByIdFactura/{IdFactura}": {
+      "get": {
+        "tags": [
+          "SeguimientoFacturaGlosa"
+        ],
+        "parameters": [
+          {
+            "name": "IdFactura",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.ListSeguimientoFacturaGlosaByIdFactura_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.ListSeguimientoFacturaGlosaByIdFactura_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.ListSeguimientoFacturaGlosaByIdFactura_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SeguimientoFacturaGlosa/Resumen/ByIdFactura/{IdFactura}": {
+      "get": {
+        "tags": [
+          "SeguimientoFacturaGlosa"
+        ],
+        "parameters": [
+          {
+            "name": "IdFactura",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.GetSeguimientoFacturaGlosaResumenByIdFactura_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.GetSeguimientoFacturaGlosaResumenByIdFactura_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.GetSeguimientoFacturaGlosaResumenByIdFactura_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SeguimientoFacturaGlosa": {
+      "post": {
+        "tags": [
+          "SeguimientoFacturaGlosa"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosa_Command"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosa_Command"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosa_Command"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosa_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosa_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosa_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SeguimientoFacturaGlosa/Masivo": {
+      "post": {
+        "tags": [
+          "SeguimientoFacturaGlosa"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Command"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Command"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Command"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SeguimientoFacturaGlosa/Respuesta": {
+      "put": {
+        "tags": [
+          "SeguimientoFacturaGlosa"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaRespuesta_Command"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaRespuesta_Command"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaRespuesta_Command"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaRespuesta_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaRespuesta_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaRespuesta_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SeguimientoTipoCodigo/ByGrupo": {
+      "get": {
+        "tags": [
+          "SeguimientoTipoCodigo"
+        ],
+        "parameters": [
+          {
+            "name": "Grupo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Nivel",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "IdSeguimientoTipoCodigoPadre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.GetListSeguimientoTipoCodigoQuery_Result"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.GetListSeguimientoTipoCodigoQuery_Result"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.GetListSeguimientoTipoCodigoQuery_Result"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MinSalud.SIIFA.API.Factura.WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]": {
+        "type": "object",
+        "properties": {
+          "paginaActual": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registrosPorPagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRegistros": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "resultado": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_Result"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListTransaccionByIdFactura_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]": {
+        "type": "object",
+        "properties": {
+          "paginaActual": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registrosPorPagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRegistros": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "resultado": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListTransaccionByIdFactura_Result"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MinSalud.SIIFA.API.Factura.Utilities.PaginadorGenerico`1[[Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListUsuariosByIdTransaccion_Result, MinSalud.SIIFA.API.Factura, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]": {
+        "type": "object",
+        "properties": {
+          "paginaActual": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registrosPorPagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRegistros": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "resultado": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListUsuariosByIdTransaccion_Result"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MinSalud.SIIFA.API.Factura.WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "$ref": "#/components/schemas/System.DateOnly"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_Result": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idFacturaEmisor": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idFacturaAdquiriente": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idFacturaFevRips": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idContrato": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "fad02IndicadorTipoOperacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "fad04Profileexecutionid2": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fad05NumeroFactura": {
+            "type": "string",
+            "nullable": true
+          },
+          "fad06Cufe": {
+            "type": "string",
+            "nullable": true
+          },
+          "fad09FechaEmision": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fad10HoraEmision": {
+            "$ref": "#/components/schemas/System.TimeOnly"
+          },
+          "fad11FechaVencimiento": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fad12TipoFactura": {
+            "type": "string",
+            "nullable": true
+          },
+          "fad15DivisaFactura": {
+            "type": "string",
+            "nullable": true
+          },
+          "fad16NumeroElementos": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fau02TotalValorBruto": {
+            "type": "number",
+            "format": "double"
+          },
+          "fau04TotalValorBaseImponible": {
+            "type": "number",
+            "format": "double"
+          },
+          "fau06TotalValorBrutoAtributos": {
+            "type": "number",
+            "format": "double"
+          },
+          "fau08DescuentoTotal": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fau10CargoTotal": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fau12AnticipoTotal": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fau14ValorFactura": {
+            "type": "number",
+            "format": "double"
+          },
+          "emisor": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultEmisor"
+          },
+          "adquiriente": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultAdquiriente"
+          },
+          "resolucionSalud": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultResolucionSalud"
+          },
+          "facturaLinea": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultFacturaLinea"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultAdquiriente": {
+        "type": "object",
+        "properties": {
+          "fak02TipoPersona": {
+            "type": "string",
+            "nullable": true
+          },
+          "fak06NombreComercial": {
+            "type": "string",
+            "nullable": true
+          },
+          "fak20RazonSocial": {
+            "type": "string",
+            "nullable": true
+          },
+          "fak21NitAdquiriente": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultEmisor": {
+        "type": "object",
+        "properties": {
+          "faj02TipoPersona": {
+            "type": "string",
+            "nullable": true
+          },
+          "faj06NombreComercial": {
+            "type": "string",
+            "nullable": true
+          },
+          "faj20RazonSocial": {
+            "type": "string",
+            "nullable": true
+          },
+          "faj21NitEmisor": {
+            "type": "string",
+            "nullable": true
+          },
+          "faj28DireccionFiscal": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultEmisorDireccionFiscal"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultEmisorDireccionFiscal": {
+        "type": "object",
+        "properties": {
+          "faj29CodigoMunicipio": {
+            "type": "string",
+            "nullable": true
+          },
+          "faj58CodigoPostal": {
+            "type": "string",
+            "nullable": true
+          },
+          "faj32CodigoDepartamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "faJ34Direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "faJ36CodigoPais": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultFacturaLinea": {
+        "type": "object",
+        "properties": {
+          "fav04Cantidad": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fav05IdUnidadMedida": {
+            "type": "string",
+            "nullable": true
+          },
+          "fav06ValorTotalLinea": {
+            "type": "number",
+            "format": "double"
+          },
+          "fav07CodigoMonedaValorTotalLinea": {
+            "type": "string",
+            "nullable": true
+          },
+          "faz02DescripcionArticuloServicio": {
+            "type": "string",
+            "nullable": true
+          },
+          "faz04MarcaArticulo": {
+            "type": "string",
+            "nullable": true
+          },
+          "fbb02ValorArticuloServicio": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fbb04Cantidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fbb05UnidadCantidadArticulo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.DetailFactura_ResultResolucionSalud": {
+        "type": "object",
+        "properties": {
+          "codigoPrestadorServicioSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "modalidadPago": {
+            "type": "string",
+            "nullable": true
+          },
+          "coberturaPlanBeneficios": {
+            "type": "string",
+            "nullable": true
+          },
+          "numeroContrato": {
+            "type": "string",
+            "nullable": true
+          },
+          "numeroPoliza": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaInicioPeriodoFacturacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaFinPeriodoFacturacion": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetAlertaFacturaQuery_Result": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_Result": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idFacturaEmisor": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idFacturaAdquiriente": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "indicadorTipoOperacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "profileexecutionid2": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "numeroFactura": {
+            "type": "string",
+            "nullable": true
+          },
+          "cufe": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaEmision": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "horaEmision": {
+            "$ref": "#/components/schemas/System.TimeOnly"
+          },
+          "fechaVencimiento": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "tipoFactura": {
+            "type": "string",
+            "nullable": true
+          },
+          "divisaFactura": {
+            "type": "string",
+            "nullable": true
+          },
+          "numeroElementos": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalValorBruto": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalValorBaseImponible": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalValorBrutoAtributos": {
+            "type": "number",
+            "format": "double"
+          },
+          "descuentoTotal": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cargoTotal": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "anticipoTotal": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "valorFactura": {
+            "type": "number",
+            "format": "double"
+          },
+          "emisor": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_ResultEmisor"
+          },
+          "adquiriente": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_ResultAdquiriente"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_ResultAdquiriente": {
+        "type": "object",
+        "properties": {
+          "tipoPersona": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreComercial": {
+            "type": "string",
+            "nullable": true
+          },
+          "razonSocial": {
+            "type": "string",
+            "nullable": true
+          },
+          "nitAdquiriente": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.Factura.Queries.GetListFacturaQuery_ResultEmisor": {
+        "type": "object",
+        "properties": {
+          "tipoPersona": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreComercial": {
+            "type": "string",
+            "nullable": true
+          },
+          "razonSocial": {
+            "type": "string",
+            "nullable": true
+          },
+          "nitEmisor": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.FacturaRadicado.DetailFacturaRadicado_Result": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "radicado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRadicado": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioRegistro": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.FacturaRadicado.GetFacturaRadicadoByIdFactura_Result": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "radicado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRadicado": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioRegistro": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.DetailSeguimientoFacturaGlosa_Result": {
+        "type": "object",
+        "properties": {
+          "idSeguimientoFacturaGlosa": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idFactura": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idConsulta": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idHospitalizacion": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idMedicamento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idOtroServicio": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idProcedimiento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idRecienNacido": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUrgencia": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "valorGlosa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "observacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "idSeguimientoTipoCodigoGlosa": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcionSeguimientoTipoCodigoGlosa": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioCreacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRespuesta": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "usuarioRespuesta": {
+            "type": "string",
+            "nullable": true
+          },
+          "idSeguimientoTipoCodigoRespuesta": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcionSeguimientoTipoCodigoRespuesta": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuarioReporte": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaReporte": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.GetListSeguimientoTipoCodigoQuery_Result": {
+        "type": "object",
+        "properties": {
+          "idSeguimientoTipoCodigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idSeguimientoTipoCodigoPadre": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "nivel": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.GetSeguimientoFacturaGlosaResumenByIdFactura_Result": {
+        "type": "object",
+        "properties": {
+          "conteoIdSeguimientoFacturaGlosa": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoIdFactura": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoIdConsulta": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoIdHospitalizacion": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoIdMedicamento": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoIdOtroServicio": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoIdProcedimiento": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoIdRecienNacido": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoIdUrgencia": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoIdUsuario": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "conteoRespuestas": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Factura.Features.SeguimientoFacturaGlosa.ListSeguimientoFacturaGlosaByIdFactura_Result": {
+        "type": "object",
+        "properties": {
+          "idSeguimientoFacturaGlosa": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idFactura": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idConsulta": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idHospitalizacion": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idMedicamento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idOtroServicio": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idProcedimiento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idRecienNacido": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUrgencia": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "valorGlosa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "observacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "idSeguimientoTipoCodigoGlosa": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcionSeguimientoTipoCodigoGlosa": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuarioCreacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRespuesta": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "usuarioRespuesta": {
+            "type": "string",
+            "nullable": true
+          },
+          "idSeguimientoTipoCodigoRespuesta": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcionSeguimientoTipoCodigoRespuesta": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuarioReporte": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaReporte": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "anexo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Command": {
+        "type": "object",
+        "properties": {
+          "listaRadicado": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Objeto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Objeto": {
+        "type": "object",
+        "properties": {
+          "radicado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRadicado": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "numeroFactura": {
+            "type": "string",
+            "nullable": true
+          },
+          "nitAdquiriente": {
+            "type": "string",
+            "nullable": true
+          },
+          "nitEmisor": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicadoMasivo_Result": {
+        "type": "object",
+        "properties": {
+          "idFacturaRadicado": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idFactura": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "radicado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRadicado": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicado_Command": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "radicado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRadicado": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.FacturaRadicado.Commands.AddFacturaRadicado_Result": {
+        "type": "object",
+        "properties": {
+          "radicado": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRadicado": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "idFactura": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "numeroFactura": {
+            "type": "string",
+            "nullable": true
+          },
+          "nitAdquiriente": {
+            "type": "string",
+            "nullable": true
+          },
+          "nitEmisor": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_Result": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idTransaccion": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "u01TipoDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "u02NumeroDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "u03TipoUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "u04FechaNacimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "u05CodigoSexo": {
+            "type": "string",
+            "nullable": true
+          },
+          "u06CodigoPaisResidencia": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "u07CodigoMunicipioResidencia": {
+            "type": "string",
+            "nullable": true
+          },
+          "u08CodigoZonaTerritorialResidencia": {
+            "type": "string",
+            "nullable": true
+          },
+          "u09Incapacidad": {
+            "type": "string",
+            "nullable": true
+          },
+          "u10Consecutivo": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ripsConsulta": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsConsultaResult"
+            },
+            "nullable": true
+          },
+          "ripsHospitalizacion": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsHospitalizacionResult"
+            },
+            "nullable": true
+          },
+          "ripsMedicamento": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsMedicamentoResult"
+            },
+            "nullable": true
+          },
+          "ripsOtroServicio": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsOtroServicioResult"
+            },
+            "nullable": true
+          },
+          "ripsProcedimiento": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsProcedimientoResult"
+            },
+            "nullable": true
+          },
+          "ripsRecienNacido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsRecienNacidoResult"
+            },
+            "nullable": true
+          },
+          "ripsUrgencia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsUrgenciaResult"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsConsultaResult": {
+        "type": "object",
+        "properties": {
+          "idConsulta": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "c01CodigoPrestador": {
+            "type": "string",
+            "nullable": true
+          },
+          "c02FechaInicioAtencion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "c03NumeroAutorizacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "c04CodigoConsulta": {
+            "type": "string",
+            "nullable": true
+          },
+          "c05ModalidadGrupoServicioTecSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "c06GrupoServicios": {
+            "type": "string",
+            "nullable": true
+          },
+          "c07CodigoServicio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "c08FinalidadTecnologiaSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "c09CausaMotivoAtencion": {
+            "type": "string",
+            "nullable": true
+          },
+          "c10CodigoDxPrincipal": {
+            "type": "string",
+            "nullable": true
+          },
+          "c11CodigoDxRelacionado1": {
+            "type": "string",
+            "nullable": true
+          },
+          "c12CodigoDxRelacionado2": {
+            "type": "string",
+            "nullable": true
+          },
+          "c13CodigoDxRelacionado3": {
+            "type": "string",
+            "nullable": true
+          },
+          "c14TipoDiagnosticoPrincipal": {
+            "type": "string",
+            "nullable": true
+          },
+          "c15TipoDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "c16NumeroDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "c17ValorServicio": {
+            "type": "number",
+            "format": "double"
+          },
+          "c18TipoPagoCompartido": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "c19ValorPagoCompartido": {
+            "type": "number",
+            "format": "double"
+          },
+          "c20NumeroFacturaPagoCompartido": {
+            "type": "string",
+            "nullable": true
+          },
+          "c21Consecutivo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsHospitalizacionResult": {
+        "type": "object",
+        "properties": {
+          "idHospitalizacion": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "h01CodigoPrestador": {
+            "type": "string",
+            "nullable": true
+          },
+          "h02ViaIngresoServicioSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "h03FechaInicioAtencion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "h04NumeroAutorizacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "h05CausaMotivoAtencion": {
+            "type": "string",
+            "nullable": true
+          },
+          "h06CodigoDxPrincipal": {
+            "type": "string",
+            "nullable": true
+          },
+          "h07CodigoDxPrincipalEgreso": {
+            "type": "string",
+            "nullable": true
+          },
+          "h08CodigoDxRelacionadoEgreso1": {
+            "type": "string",
+            "nullable": true
+          },
+          "h09CodigoDxRelacionadoEgreso2": {
+            "type": "string",
+            "nullable": true
+          },
+          "h10CodigoDxRelacionadoEgreso3": {
+            "type": "string",
+            "nullable": true
+          },
+          "h11CodigoComplicacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "h12CondicionDestinoUsuarioEgreso": {
+            "type": "string",
+            "nullable": true
+          },
+          "h13CodigoDxCausaMuerte": {
+            "type": "string",
+            "nullable": true
+          },
+          "h14FechaEgreso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "h15Consecutivo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsMedicamentoResult": {
+        "type": "object",
+        "properties": {
+          "idMedicamento": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "m01CodigoPrestador": {
+            "type": "string",
+            "nullable": true
+          },
+          "m02NumeroAutorizacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "m03IdMipres": {
+            "type": "string",
+            "nullable": true
+          },
+          "m04FechaDispensacionAdministracion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "m05CodigoDxPrincipal": {
+            "type": "string",
+            "nullable": true
+          },
+          "m06CodigoDxRelacionado": {
+            "type": "string",
+            "nullable": true
+          },
+          "m07TipoMedicamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "m08CodigoTecnologiaSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "m09NombreTecnologiaSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "m10ConcentracionMedicamento": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "m11UnidadMedida": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "m12FormaFarmaceutica": {
+            "type": "string",
+            "nullable": true
+          },
+          "m13UnidadMinimaDispensa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "m14CantidadMedicamento": {
+            "type": "number",
+            "format": "double"
+          },
+          "m15DiasTratamiento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "m16TipoDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "m17NumeroDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "m18ValorUnitarioMedicamento": {
+            "type": "number",
+            "format": "double"
+          },
+          "m19ValorTotalMedicamento": {
+            "type": "number",
+            "format": "double"
+          },
+          "m20TipoPagoCompartido": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "m21ValorPagoCompartido": {
+            "type": "number",
+            "format": "double"
+          },
+          "m22NumeroFacturaPagoCompartido": {
+            "type": "string",
+            "nullable": true
+          },
+          "m23Consecutivo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsOtroServicioResult": {
+        "type": "object",
+        "properties": {
+          "idOtroServicio": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "s01CodigoPrestador": {
+            "type": "string",
+            "nullable": true
+          },
+          "s02NumeroAutorizacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "s03IdMipres": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "s04FechaSuministroTecnologia": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "s05TipoOtroServicio": {
+            "type": "string",
+            "nullable": true
+          },
+          "s06CodigoTecnologiaSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "s07NombreTecnologiaSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "s08Cantidad": {
+            "type": "number",
+            "format": "double"
+          },
+          "s09TipoDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "s10NumeroDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "s11ValorUnitario": {
+            "type": "number",
+            "format": "double"
+          },
+          "s12ValorTotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "s13TipoPagoCompartido": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "s14ValorPagoCompartido": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "s15NumeroFacturaPagoCompartido": {
+            "type": "string",
+            "nullable": true
+          },
+          "s16Consecutivo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsProcedimientoResult": {
+        "type": "object",
+        "properties": {
+          "idProcedimiento": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "p01CodigoPrestador": {
+            "type": "string",
+            "nullable": true
+          },
+          "p02FechaInicioAtencion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "p03IdMipres": {
+            "type": "string",
+            "nullable": true
+          },
+          "p04NumeroAutorizacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "p05CodigoProcedimiento": {
+            "type": "string",
+            "nullable": true
+          },
+          "p06ViaIngresoServicioSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "p07ModalidadGrupoServiciosTecSal": {
+            "type": "string",
+            "nullable": true
+          },
+          "p08GrupoServicios": {
+            "type": "string",
+            "nullable": true
+          },
+          "p09CodigoServicio": {
+            "type": "number",
+            "format": "double"
+          },
+          "p10FinalidadTecnologiaSalud": {
+            "type": "string",
+            "nullable": true
+          },
+          "p11TipoDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "p12NumeroDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "p13CodigoDxPrincipal": {
+            "type": "string",
+            "nullable": true
+          },
+          "p14CodigoDxRelacionado": {
+            "type": "string",
+            "nullable": true
+          },
+          "p15CodigoComplicacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "p16ValorProcedimiento": {
+            "type": "number",
+            "format": "double"
+          },
+          "p17TipoPagoCompartido": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "p18ValorPagoCompartido": {
+            "type": "number",
+            "format": "double"
+          },
+          "p19NumeroFacturaPagoCompartido": {
+            "type": "string",
+            "nullable": true
+          },
+          "p20Consecutivo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsRecienNacidoResult": {
+        "type": "object",
+        "properties": {
+          "idRecienNacido": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "n01CodigoPrestador": {
+            "type": "string",
+            "nullable": true
+          },
+          "n02TipoDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "n03NumeroDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "n04FechaNacimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "n05EdadGestacional": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "n06NumeroConsultasCuidadoPrenatal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "n07CodigoSexoBiologico": {
+            "type": "string",
+            "nullable": true
+          },
+          "n08Peso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "n09CodigoDxPrincipal": {
+            "type": "string",
+            "nullable": true
+          },
+          "n10CodigoDestinoUsuarioEgreso": {
+            "type": "string",
+            "nullable": true
+          },
+          "n11CodigoDxCausaMuerte": {
+            "type": "string",
+            "nullable": true
+          },
+          "n12FechaEgreso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "n13Consecutivo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetDetailUsuarioByIdUsuario_RipsUrgenciaResult": {
+        "type": "object",
+        "properties": {
+          "idUrgencia": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "r01CodigoPrestador": {
+            "type": "string",
+            "nullable": true
+          },
+          "r02FechaInicioAtencion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "r03CausaMotivoAtencion": {
+            "type": "string",
+            "nullable": true
+          },
+          "r04CodigoDxPrincipal": {
+            "type": "string",
+            "nullable": true
+          },
+          "r05CodigoDxPrincipalEgreso": {
+            "type": "string",
+            "nullable": true
+          },
+          "r06CodigoDxRelacionadoEgreso1": {
+            "type": "string",
+            "nullable": true
+          },
+          "r07CodigoDxRelacionadoEgreso2": {
+            "type": "string",
+            "nullable": true
+          },
+          "r08CodigoDxRelacionadoEgreso3": {
+            "type": "string",
+            "nullable": true
+          },
+          "r09CondicionDestinoUsuarioEgreso": {
+            "type": "string",
+            "nullable": true
+          },
+          "r10CodigoDxCausaMuerte": {
+            "type": "string",
+            "nullable": true
+          },
+          "r11FechaEgreso": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "r12Consecutivo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListTransaccionByIdFactura_Result": {
+        "type": "object",
+        "properties": {
+          "idTransaccion": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idFactura": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "t01NumeroDocumentoIdObligado": {
+            "type": "number",
+            "format": "double"
+          },
+          "t02NumeroFactura": {
+            "type": "string",
+            "nullable": true
+          },
+          "t03TipoNota": {
+            "type": "string",
+            "nullable": true
+          },
+          "t04NumeroNota": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Rips.Transaccion.Queries.GetListUsuariosByIdTransaccion_Result": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idTransaccion": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "u01TipoDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "u02NumeroDocumentoIdentificacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "u03TipoUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "u04FechaNacimiento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "u05CodigoSexo": {
+            "type": "string",
+            "nullable": true
+          },
+          "u06CodigoPaisResidencia": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "u07CodigoMunicipioResidencia": {
+            "type": "string",
+            "nullable": true
+          },
+          "u08CodigoZonaTerritorialResidencia": {
+            "type": "string",
+            "nullable": true
+          },
+          "u09Incapacidad": {
+            "type": "string",
+            "nullable": true
+          },
+          "u10Consecutivo": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Command": {
+        "type": "object",
+        "properties": {
+          "listaGlosas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Objeto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Objeto": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idConsulta": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idHospitalizacion": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idMedicamento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idOtroServicio": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idProcedimiento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idRecienNacido": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUrgencia": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "valorGlosa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "idSeguimientoTipoCodigoGlosa": {
+            "type": "string",
+            "nullable": true
+          },
+          "observacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaMasivo_Result": {
+        "type": "object",
+        "properties": {
+          "idSeguimientoFacturaGlosa": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idFactura": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idConsulta": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idHospitalizacion": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idMedicamento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idOtroServicio": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idProcedimiento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idRecienNacido": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUrgencia": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "valorGlosa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "idSeguimientoTipoCodigoGlosa": {
+            "type": "string",
+            "nullable": true
+          },
+          "observacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaReporte": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaRespuesta_Command": {
+        "type": "object",
+        "properties": {
+          "idSeguimientoFacturaGlosa": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idSeguimientoTipoCodigoRespuesta": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosaRespuesta_Result": {
+        "type": "object",
+        "properties": {
+          "idSeguimientoFacturaGlosa": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosa_Command": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idConsulta": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idHospitalizacion": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idMedicamento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idOtroServicio": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idProcedimiento": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idRecienNacido": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUrgencia": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "valorGlosa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "idSeguimientoTipoCodigoGlosa": {
+            "type": "string",
+            "nullable": true
+          },
+          "observacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.SeguimientoFacturaGlosa.Commands.AddSeguimientoFacturaGlosa_Result": {
+        "type": "object",
+        "properties": {
+          "idSeguimientoFacturaGlosa": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "System.DateOnly": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dayOfWeek": {
+            "$ref": "#/components/schemas/System.DayOfWeek"
+          },
+          "dayOfYear": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "dayNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "System.DayOfWeek": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "System.TimeOnly": {
+        "type": "object",
+        "properties": {
+          "hour": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "second": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "millisecond": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "microsecond": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "nanosecond": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "ticks": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Por favor ingrese un token válido",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}
