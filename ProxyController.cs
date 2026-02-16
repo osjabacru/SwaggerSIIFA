@@ -1,133 +1,94 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
-using System.Text;
 
 [ApiController]
-[Route("proxy/{context}/{**path}")]
+[Route("proxy")]
 public class ProxyController : ControllerBase
 {
-    private readonly HttpClient _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IConfiguration _configuration;
 
-    public ProxyController(IHttpClientFactory factory)
+    public ProxyController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
-        _httpClient = factory.CreateClient();
+        _httpClientFactory = httpClientFactory;
+        _configuration = configuration;
     }
 
-    [HttpGet]
-    [HttpPost]
-    [HttpPut]
-    [HttpDelete]
-    public async Task<IActionResult> Forward(string context, string path)
+    [Route("{apiId}/{*path}")]
+    public async Task ProxyRequest(string apiId, string path)
     {
-        try
+        // 1. Obtener la URL base desde appsettings.json
+        var baseUrl = _configuration.GetValue<string>($"SwaggerServers:{apiId}");
+
+        if (string.IsNullOrEmpty(baseUrl))
         {
-            // 1️⃣ Determinar base según contexto
-            string baseUrl = context.ToLower() switch
+            Response.StatusCode = 404;
+            await Response.WriteAsync($"Configuración para '{apiId}' no encontrada.");
+            return;
+        }
+
+        var client = _httpClientFactory.CreateClient("proxy");
+
+        // 2. Construir la URL destino de forma limpia
+        var targetUrl = $"{baseUrl.TrimEnd('/')}/{path.TrimStart('/')}{Request.QueryString}";
+
+        // 3. Crear el mensaje de solicitud con el método original (GET, POST, etc.)
+        var requestMessage = new HttpRequestMessage(new HttpMethod(Request.Method), targetUrl);
+
+        // 4. Copiar el Body si la petición lo requiere (POST, PUT, PATCH)
+        if (Request.ContentLength > 0 || Request.Headers.ContainsKey("Transfer-Encoding"))
+        {
+            // Importante: No cerramos el stream del body para que se pueda copiar
+            requestMessage.Content = new StreamContent(Request.Body);
+
+            // Copiar el Content-Type específico
+            if (!string.IsNullOrEmpty(Request.ContentType))
             {
-                "contrato" => "https://siifa.sispropreprod.gov.co/siifacon",
-                "factura" => "https://siifa.sispropreprod.gov.co/siifafa",
-                "seguridad" => "https://siifa.sispropreprod.gov.co/siifaseg",
-                _ => throw new Exception($"Contexto desconocido: {context}")
-            };
-
-            // 2️⃣ Obtener el path real de la solicitud (no el parámetro)
-            var fullPath = Request.Path.Value ?? "";
-            var original = fullPath;
-
-            Console.WriteLine($"➡️ Request.Path: {fullPath}");
-            Console.WriteLine($"➡️ Param 'path': {path ?? "(null)"}");
-
-            baseUrl = path.ToLower() switch
-            {
-                var p when p.Contains("siifacon") => "https://siifa.sispropreprod.gov.co/siifacon",
-                var p when p.Contains("siifafa") => "https://siifa.sispropreprod.gov.co/siifafa",
-                var p when p.Contains("siifaseg") => "https://siifa.sispropreprod.gov.co/siifaseg",
-                var p when p.Contains("contrato") => "https://siifa.sispropreprod.gov.co/siifacon",
-                _ => throw new Exception($"Contexto desconocido: {path}")
-            };
-
-            // 3️⃣ Limpiar completamente cualquier prefijo duplicado
-            // Quitar "/proxy/{context}" inicial y todo lo que haya antes del endpoint real
-            // Ejemplo: "/proxy/seguridad/proxy/seguridad/siifaseg/api/Auth/login"
-            // → "api/Auth/login"
-            string pattern = @$"proxy/{context}/";
-            int idx = fullPath.IndexOf(pattern, StringComparison.OrdinalIgnoreCase);
-            if (idx >= 0)
-            {
-                // Cortar desde después de la última ocurrencia de proxy/{context}/
-                int lastIdx = fullPath.LastIndexOf(pattern, StringComparison.OrdinalIgnoreCase);
-                fullPath = fullPath.Substring(lastIdx + pattern.Length);
+                requestMessage.Content.Headers.TryAddWithoutValidation("Content-Type", Request.ContentType);
             }
+        }
 
-            // Quitar otros prefijos comunes (siifaseg/, siifacon/, siifafa/, proxy/)
-            string[] prefixes = { "siifaseg/", "siifacon/", "siifafa/", "proxy/" };
-            foreach (var pfx in prefixes)
+        // 5. Copiar los Headers (Authorization, Accept, etc.)
+        foreach (var header in Request.Headers)
+        {
+            // Evitamos copiar headers que el HttpClient gestiona automáticamente o que causan conflicto
+            if (!header.Key.Equals("Host", StringComparison.OrdinalIgnoreCase) &&
+                !header.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
             {
-                if (fullPath.StartsWith(pfx, StringComparison.OrdinalIgnoreCase))
+                if (!requestMessage.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray()))
                 {
-                    fullPath = fullPath.Substring(pfx.Length);
-                    break;
+                    requestMessage.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());
                 }
             }
+        }
 
-            if (fullPath.Contains("/siifacon/", StringComparison.OrdinalIgnoreCase))
-                fullPath = fullPath.Substring(fullPath.IndexOf("/siifacon/", StringComparison.OrdinalIgnoreCase) + "/siifacon/".Length);
+        try
+        {
+            // 6. Enviar la petición al servidor de SISPRO
+            using var responseMessage = await client.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead);
 
-            else if (fullPath.Contains("/siifafa/", StringComparison.OrdinalIgnoreCase))
-                fullPath = fullPath.Substring(fullPath.IndexOf("/siifafa/", StringComparison.OrdinalIgnoreCase) + "/siifafa/".Length);
+            // 7. Copiar la respuesta del servidor remoto a nuestra respuesta local
+            Response.StatusCode = (int)responseMessage.StatusCode;
 
-            else if (fullPath.Contains("/siifaseg/", StringComparison.OrdinalIgnoreCase))
-                fullPath = fullPath.Substring(fullPath.IndexOf("/siifaseg/", StringComparison.OrdinalIgnoreCase) + "/siifaseg/".Length);
-
-            // Limpiar barras redundantes
-            fullPath = fullPath.TrimStart('/').Replace("//", "/");
-
-            // 4️⃣ Armar URL destino
-            var queryString = Request.QueryString.HasValue ? Request.QueryString.Value : "";
-            var targetUrl = $"{baseUrl}/{fullPath}{queryString}"
-                .Replace(":/", "://")
-                .Replace("//", "/");
-
-            Console.WriteLine($"🔹 [{context}] Limpieza: '{original}' → '{fullPath}'");
-            Console.WriteLine($"🔹 [{context}] Reenviando solicitud a: {targetUrl}");
-
-            // 5️⃣ Crear solicitud HTTP hacia el destino
-            var request = new HttpRequestMessage(new HttpMethod(Request.Method), targetUrl);
-
-            // Copiar el cuerpo si aplica
-            if (Request.ContentLength > 0)
+            // Copiar encabezados de respuesta
+            foreach (var header in responseMessage.Headers)
             {
-                using var reader = new StreamReader(Request.Body, Encoding.UTF8);
-                var body = await reader.ReadToEndAsync();
-                request.Content = new StringContent(body, Encoding.UTF8, Request.ContentType ?? "application/json");
+                Response.Headers[header.Key] = header.Value.ToArray();
+            }
+            foreach (var header in responseMessage.Content.Headers)
+            {
+                Response.Headers[header.Key] = header.Value.ToArray();
             }
 
-            // Copiar headers excepto Host
-            foreach (var header in Request.Headers)
-            {
-                if (header.Key.Equals("Host", StringComparison.OrdinalIgnoreCase))
-                    continue;
+            // Eliminar este header para evitar problemas de compresión/transmisión
+            Response.Headers.Remove("transfer-encoding");
 
-                if (!request.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray()) && request.Content != null)
-                    request.Content.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());
-            }
-
-            request.Headers.UserAgent.ParseAdd("SwaggerProxy/1.0");
-
-            // 6️⃣ Enviar la solicitud al backend
-            var response = await _httpClient.SendAsync(request);
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            Response.StatusCode = (int)response.StatusCode;
-            Response.Headers["X-Proxied-To"] = targetUrl;
-
-            Console.WriteLine($"✅ [{context}] Respuesta {(int)response.StatusCode}");
-            return Content(responseContent, response.Content.Headers.ContentType?.ToString() ?? "application/json");
+            // Copiar el contenido de la respuesta (el JSON de respuesta de SISPRO)
+            await responseMessage.Content.CopyToAsync(Response.Body);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"❌ Error en proxy ({context}/{path}): {ex.Message}");
-            return StatusCode(500, $"Proxy error: {ex.Message}");
+            Response.StatusCode = 500;
+            await Response.WriteAsync($"Error en el Proxy: {ex.Message}");
         }
     }
 }

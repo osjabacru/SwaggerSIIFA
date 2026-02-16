@@ -2,19 +2,16 @@
   "openapi": "3.0.4",
   "info": {
     "title": "MinSalud.SIIFA.API.Contrato",
-    "version": "v1"
+    "version": "v1.0.3"
   },
-  "servers": [
-    {
-      "url": "https://siifa.sispropreprod.gov.co/siifacon"
-    }
-  ],
   "paths": {
     "/api/CodigoReferencia/GetByNombreDominio/{NombreDominio}": {
       "get": {
         "tags": [
           "CodigoReferencia"
         ],
+        "summary": "Obtiene la lista de códigos de referencia filtrados por nombre de dominio.",
+        "description": "Este endpoint permite consultar códigos de referencia asociados a un dominio específico mediante su nombre.\nLos resultados incluyen el identificador y la descripción de cada código de referencia.\n\nSample request:\n\n    GET /api/CodigoReferencia/GetByNombreDominio/TipoContrato",
         "parameters": [
           {
             "name": "NombreDominio",
@@ -27,16 +24,8 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Lista de códigos de referencia obtenida exitosamente.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.CodigoReferencia.Queries.ListCodigoReferenciaByNombreDominio_Result"
-                  }
-                }
-              },
               "application/json": {
                 "schema": {
                   "type": "array",
@@ -44,13 +33,45 @@
                     "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.CodigoReferencia.Queries.ListCodigoReferenciaByNombreDominio_Result"
                   }
                 }
-              },
-              "text/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta. El nombre del dominio no es válido.",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.CodigoReferencia.Queries.ListCodigoReferenciaByNombreDominio_Result"
-                  }
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontraron códigos de referencia para el dominio especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -63,6 +84,8 @@
         "tags": [
           "CodigoReferencia"
         ],
+        "summary": "Obtiene la lista de códigos de referencia filtrados por identificador de dominio.",
+        "description": "Este endpoint permite consultar códigos de referencia asociados a un dominio específico mediante su ID.\nLos resultados incluyen el identificador y la descripción de cada código de referencia.\n\nSample request:\n\n    GET /api/CodigoReferencia/GetByIdDominio/6",
         "parameters": [
           {
             "name": "IdDominio",
@@ -76,16 +99,8 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Lista de códigos de referencia obtenida exitosamente.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.CodigoReferencia.Queries.ListCodigoReferenciaByIdDominio_Result"
-                  }
-                }
-              },
               "application/json": {
                 "schema": {
                   "type": "array",
@@ -93,13 +108,89 @@
                     "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.CodigoReferencia.Queries.ListCodigoReferenciaByIdDominio_Result"
                   }
                 }
-              },
-              "text/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta. El ID del dominio no es válido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontraron códigos de referencia para el dominio especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CodigoReferenciaDominio": {
+      "get": {
+        "tags": [
+          "CodigoReferenciaDominio"
+        ],
+        "summary": "Obtiene la lista de todos los dominios de código de referencia activos.",
+        "description": "Este endpoint permite consultar todos los dominios de código de referencia disponibles en el sistema,\nincluyendo información como unidad de análisis, nombre, descripción y estado activo.\n\nLos resultados se devuelven ordenados por nombre y solo incluyen dominios activos.\n\nSample request:\n\n    GET /api/CodigoReferenciaDominio",
+        "responses": {
+          "200": {
+            "description": "Lista de dominios obtenida exitosamente.",
+            "content": {
+              "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.CodigoReferencia.Queries.ListCodigoReferenciaByIdDominio_Result"
+                    "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.CodigoReferenciaDominio.Queries.ListCodigoReferenciaDominio_Result"
                   }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -112,8 +203,8 @@
         "tags": [
           "Contrato"
         ],
-        "summary": "Obtiene la lista de contratos con filtros opcionales.",
-        "description": "Permite filtrar por IdContrato, NitContratante, NitContratista, Nombre, Código de Estado, Año de Suscripción, Número de Página y Registros por Página.",
+        "summary": "Obtiene una lista paginada de contratos con filtros opcionales.",
+        "description": "Este endpoint permite consultar contratos aplicando múltiples filtros opcionales:\n\n**Filtros disponibles:**\n- **IdContrato**: Filtro por identificador específico del contrato\n- **NitContratante**: Filtro por NIT del contratante (entidad que contrata)\n- **NitContratista**: Filtro por NIT del contratista (prestador de servicios)\n- **Nombre**: Búsqueda parcial por nombre del contrato\n- **CodigoEstado**: Filtro por estado del contrato (102001=En creación, 102002=Activo, etc.)\n- **AnioSuscripcion**: Filtro por año de suscripción del contrato\n- **NumeroPagina**: Número de página para paginación (debe ser mayor a 0, default: 1)\n- **RegistrosPorPagina**: Cantidad de registros por página (debe ser mayor a 0 y menor o igual a 100, default: 10)\n\n**Seguridad y roles:**\n- **SIIFA_Admin**: Acceso a todos los contratos sin restricciones\n- **SIIFA_IPS**: Solo puede consultar contratos donde sea el contratista (NitContratista filtrado automáticamente)\n- **SIIFA_ERP**: Solo puede consultar contratos donde sea el contratante (NitContratante filtrado automáticamente)\n\nLos resultados se devuelven paginados con metadatos que incluyen:\n- Total de registros encontrados\n- Total de páginas disponibles\n- Página actual\n- Registros por página\n\n**Validaciones:**\n- NumeroPagina debe ser mayor a 0\n- RegistrosPorPagina debe ser mayor a 0 y no superar 100\n\nSample request:\n\n    GET /api/Contrato?NumeroPagina=1&RegistrosPorPagina=10&CodigoEstado=102001\n    GET /api/Contrato?NitContratista=800123456&AnioSuscripcion=2025\n    GET /api/Contrato?Nombre=Servicios%20de%20Salud",
         "parameters": [
           {
             "name": "IdContrato",
@@ -179,21 +270,41 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Lista paginada de contratos obtenida exitosamente.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/PaginadorGenerico_Result"
-                }
-              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/PaginadorGenerico_Result"
                 }
-              },
-              "text/json": {
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta inválidos. Verifique que NumeroPagina y RegistrosPorPagina sean mayores a 0 y que RegistrosPorPagina no supere 100.",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginadorGenerico_Result"
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al procesar la consulta.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -204,10 +315,10 @@
         "tags": [
           "Contrato"
         ],
-        "summary": "Agrega un nuevo contrato.",
-        "description": "Este endpoint permite registrar un nuevo contrato en el sistema.",
+        "summary": "Registra un nuevo contrato en el sistema SIIFA.",
+        "description": "Este endpoint permite crear un nuevo contrato con validaciones automáticas de integridad.\nEl contrato se crea en estado \"En creación\" (102001) por defecto.\n\n**Datos requeridos:**\n- **CodigoTipoContrato**: Tipo de contrato (104001 = Contrato de prestación de servicios)\n- **NitContratante**: NIT del contratante (debe existir en tabla Empresa)\n- **NitContratista**: NIT del contratista (debe existir en tabla Empresa)\n- **Nombre**: Nombre descriptivo del contrato\n- **FechaSuscripcion**: Fecha de firma del contrato\n- **FechaInicio**: Fecha de inicio de vigencia\n- **FechaFin**: Fecha de finalización (opcional)\n- **Valor**: Valor total del contrato (debe ser mayor a 0)\n\n**Datos condicionales (requeridos para contratos tipo 104001):**\n- **CodigoReferenciaModalidadPago**: Lista de modalidades de pago (ej: [1, 2])\n- **CodigoReferenciaAgrupador**: Lista de agrupadores poblacionales (ej: [5, 6])\n- **CodigoReferenciaRegimen**: Lista de regímenes aplicables (ej: [3])\n\n**Validaciones automáticas aplicadas:**\n\n1. **Validación de NITs:**\n   - NitContratante debe existir en dbo.Empresa\n   - NitContratista debe existir en dbo.Empresa\n\n2. **Validación de fechas:**\n   - FechaSuscripcion debe ser menor o igual a FechaInicio\n   - FechaInicio debe ser menor que FechaFin (si FechaFin está presente)\n\n3. **Validación de duplicidad:**\n   - No puede existir otro contrato con el mismo hash CUCON\n   - El hash se genera con: SHA256(TipoContrato + NitContratante + NitContratista + Nombre + FechaSuscripcion)\n\n4. **Validaciones condicionales (tipo 104001):**\n   - ModalidadPago es obligatoria\n   - Agrupador es obligatorio\n   - Regimen es obligatorio\n\n5. **Validaciones de datos:**\n   - Valor debe ser mayor a 0\n   - Nombre no puede estar vacío\n   - CodigoTipoContrato debe existir en CodigoReferencia\n\n**Registros creados:**\n- 1 registro en tabla Contrato\n- 1 registro en tabla ContratoEstado (estado inicial 102001)\n- N registros en tabla ContratoModalidadPago (si aplica)\n- N registros en tabla ContratoRegimen (si aplica)\n- N registros en tabla ContratoAgrupador (si aplica)\n\nSample request:\n\n    POST /api/Contrato\n    {\n        \"codigoTipoContrato\": 104001,\n        \"nitContratante\": 900123456,\n        \"nitContratista\": 800654321,\n        \"nombre\": \"Contrato de Prestación de Servicios de Salud 2025\",\n        \"fechaSuscripcion\": \"2025-01-15\",\n        \"fechaInicio\": \"2025-02-01\",\n        \"fechaFin\": \"2025-12-31\",\n        \"valor\": 500000000,\n        \"codigoReferenciaModalidadPago\": [1, 2],\n        \"codigoReferenciaAgrupador\": [5, 6],\n        \"codigoReferenciaRegimen\": [3]\n    }",
         "requestBody": {
-          "description": "Comando que contiene los datos del contrato a agregar.",
+          "description": "Comando con los datos del contrato a registrar.",
           "content": {
             "application/json": {
               "schema": {
@@ -228,19 +339,9 @@
         },
         "responses": {
           "201": {
-            "description": "Contrato agregado exitosamente.",
+            "description": "Contrato creado exitosamente. Retorna el ID del nuevo contrato y la URL para consultarlo.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.AddContrato_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.AddContrato_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.AddContrato_Result"
                 }
@@ -248,19 +349,29 @@
             }
           },
           "400": {
-            "description": "Datos inválidos para el contrato.",
+            "description": "Datos inválidos o validaciones fallidas. El detalle incluye la lista de errores de validación con el campo y el mensaje correspondiente.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
-              },
-              "text/json": {
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto. Ya existe un contrato con los mismos datos (hash CUCON duplicado).",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -268,7 +379,14 @@
             }
           },
           "500": {
-            "description": "Error interno del servidor."
+            "description": "Error interno del servidor al crear el contrato.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       },
@@ -276,10 +394,10 @@
         "tags": [
           "Contrato"
         ],
-        "summary": "Edita un contrato existente.",
-        "description": "Este endpoint permite actualizar la información de un contrato existente.",
+        "summary": "Actualiza la información de un contrato existente.",
+        "description": "Este endpoint permite modificar los datos de un contrato existente aplicando las mismas\nvalidaciones que en la creación del contrato.\n\n**Restricciones importantes:**\n- Solo se permiten actualizaciones en contratos que estén en estado \"En creación\" (102001)\n- Los contratos en estados Activo (102002), Terminado (102003) o Inactivo (102004) no pueden modificarse\n- El contrato debe existir en la base de datos\n\n**Campos actualizables:**\n- **CodigoTipoContrato**: Tipo de contrato\n- **NitContratante**: NIT del contratante (debe existir en tabla Empresa)\n- **NitContratista**: NIT del contratista (debe existir en tabla Empresa)\n- **Nombre**: Nombre descriptivo del contrato\n- **FechaSuscripcion**: Fecha de firma del contrato\n- **FechaInicio**: Fecha de inicio de vigencia\n- **FechaFin**: Fecha de finalización (opcional)\n- **Valor**: Valor total del contrato\n- **CodigoReferenciaModalidadPago**: Lista de modalidades de pago (para tipo 104001)\n- **CodigoReferenciaAgrupador**: Lista de agrupadores (para tipo 104001)\n- **CodigoReferenciaRegimen**: Lista de regímenes (para tipo 104001)\n\n**Validaciones automáticas aplicadas:**\n\n1. **Validación de existencia:**\n   - El IdContrato debe existir en la base de datos\n\n2. **Validación de NITs:**\n   - NitContratante debe existir en dbo.Empresa\n   - NitContratista debe existir en dbo.Empresa\n\n3. **Validación de fechas:**\n   - FechaSuscripcion debe ser menor o igual a FechaInicio\n   - FechaInicio debe ser menor que FechaFin (si FechaFin está presente)\n\n4. **Validación de duplicidad:**\n   - No puede existir otro contrato (diferente al actual) con el mismo hash CUCON\n   - El hash se recalcula con los nuevos datos\n\n5. **Validaciones condicionales (tipo 104001):**\n   - ModalidadPago es obligatoria\n   - Agrupador es obligatorio\n   - Regimen es obligatorio\n\n**Operaciones realizadas:**\n- Actualización del registro en tabla Contrato\n- Eliminación de registros antiguos en ContratoModalidadPago, ContratoRegimen, ContratoAgrupador\n- Creación de nuevos registros según los datos proporcionados\n- Recálculo del hash CUCON\n\n**Nota importante:** Si se eliminan valores de las listas (ModalidadPago, Regimen, Agrupador),\nlos registros relacionados se eliminarán automáticamente de la base de datos.\n\nSample request:\n\n    PUT /api/Contrato\n    {\n        \"idContrato\": 1,\n        \"codigoTipoContrato\": 104001,\n        \"nitContratante\": 900123456,\n        \"nitContratista\": 800654321,\n        \"nombre\": \"Contrato Actualizado 2025\",\n        \"fechaSuscripcion\": \"2025-01-15\",\n        \"fechaInicio\": \"2025-02-01\",\n        \"fechaFin\": \"2025-12-31\",\n        \"valor\": 550000000,\n        \"codigoReferenciaModalidadPago\": [1, 2, 3],\n        \"codigoReferenciaAgrupador\": [5],\n        \"codigoReferenciaRegimen\": [3, 4]\n    }",
         "requestBody": {
-          "description": "Comando que contiene los datos del contrato a editar.",
+          "description": "Comando con los datos actualizados del contrato. Debe incluir el IdContrato.",
           "content": {
             "application/json": {
               "schema": {
@@ -300,19 +418,9 @@
         },
         "responses": {
           "200": {
-            "description": "Contrato editado exitosamente.",
+            "description": "Contrato actualizado exitosamente. Retorna el ID del contrato modificado.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.UpdateContrato_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.UpdateContrato_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.UpdateContrato_Result"
                 }
@@ -320,19 +428,19 @@
             }
           },
           "400": {
-            "description": "Datos inválidos para el contrato.",
+            "description": "Datos inválidos o validaciones fallidas. El detalle incluye la lista de errores de validación.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
-              },
-              "text/json": {
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -340,19 +448,19 @@
             }
           },
           "404": {
-            "description": "Contrato no encontrado.",
+            "description": "Contrato no encontrado. No existe un contrato con el ID especificado.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
-              },
-              "text/json": {
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto. El contrato no puede ser editado porque no está en estado \"En creación\" (102001) o porque generaría un CUCON duplicado.",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -360,7 +468,14 @@
             }
           },
           "500": {
-            "description": "Error interno del servidor."
+            "description": "Error interno del servidor al actualizar el contrato.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -370,8 +485,8 @@
         "tags": [
           "Contrato"
         ],
-        "summary": "Obtiene los detalles de un contrato específico por su ID.",
-        "description": "Este endpoint devuelve información detallada de un contrato específico.",
+        "summary": "Obtiene los detalles completos de un contrato específico por su identificador.",
+        "description": "Este endpoint devuelve información detallada y completa de un contrato específico, incluyendo:\n\n**Información básica:**\n- Identificador del contrato (IdContrato)\n- Tipo de contrato (CodigoTipoContrato y descripción)\n- Nombre del contrato\n- Fechas: suscripción, inicio y fin\n- Valor total del contrato\n- Código CUCON (hash único del contrato)\n- Estado actual y código de estado\n\n**Información de las partes:**\n- Datos del contratante (NIT y razón social)\n- Datos del contratista (NIT y razón social)\n\n**Información de configuración:**\n- Modalidades de pago asociadas (si aplica)\n- Regímenes aplicables al contrato\n- Agrupadores relacionados (para contratos tipo 104001)\n\n**Información complementaria:**\n- Lista de otros sí (modificaciones contractuales)\n- Número de servicios asociados\n- Número de medicamentos (CUMS) asociados\n- Número de procedimientos (CUPS) asociados\n\n**Validaciones:**\n- El IdContrato debe ser un número positivo mayor a 0\n- El contrato debe existir en la base de datos\n\nSample request:\n\n    GET /api/Contrato/1\n    GET /api/Contrato/150",
         "parameters": [
           {
             "name": "IdContrato",
@@ -385,39 +500,39 @@
         ],
         "responses": {
           "200": {
-            "description": "Detalles del contrato obtenidos exitosamente.",
+            "description": "Detalles del contrato obtenidos exitosamente con toda la información relacionada.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_Result"
                 }
               }
             }
           },
-          "404": {
-            "description": "Contrato no encontrado.",
+          "400": {
+            "description": "ID de contrato inválido. El ID debe ser un número positivo mayor a 0.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
-              },
-              "text/json": {
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contrato no encontrado. No existe un contrato con el ID especificado.",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -425,7 +540,14 @@
             }
           },
           "500": {
-            "description": "Error interno del servidor."
+            "description": "Error interno del servidor al obtener los detalles del contrato.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       },
@@ -433,8 +555,8 @@
         "tags": [
           "Contrato"
         ],
-        "summary": "Elimina un contrato por su ID.",
-        "description": "Este endpoint permite eliminar un contrato específico del sistema.",
+        "summary": "Elimina permanentemente un contrato del sistema por su identificador.",
+        "description": "Este endpoint permite eliminar un contrato específico del sistema de forma permanente.\nEsta operación es irreversible y debe usarse con precaución.\n\n**Restricciones importantes:**\n- Solo se permiten eliminaciones de contratos que estén en estado \"En creación\" (102001)\n- Los contratos en estados Activo (102002), Terminado (102003) o Inactivo (102004) no pueden eliminarse\n- El contrato debe existir en la base de datos\n- El IdContrato debe ser un número positivo mayor a 0\n\n**Validaciones automáticas:**\n1. El IdContrato debe ser mayor a 0\n2. El contrato debe existir en la base de datos\n\n**Eliminaciones en cascada:**\n\nAl eliminar un contrato, se eliminarán automáticamente todos los registros relacionados:\n- **ContratoEstado**: Todos los estados históricos del contrato\n- **ContratoModalidadPago**: Todas las modalidades de pago asociadas\n- **ContratoAgrupador**: Todos los agrupadores poblacionales relacionados\n- **ContratoRegimen**: Todos los regímenes aplicables al contrato\n- **ContratoOperacion**: Todas las operaciones de cobertura poblacional\n- **ContratoPrestadorServicio**: Todos los servicios asociados\n- **ContratoCums**: Todos los medicamentos asociados\n- **ContratoCups**: Todos los procedimientos asociados\n- **ContratoOtrosi**: Todos los otros sí (modificaciones) del contrato\n- **ContratoAnticipo**: Todos los anticipos registrados\n- **ContratoLiquidacion**: Todas las liquidaciones asociadas\n\n**Nota importante:** Esta operación elimina el contrato y TODOS sus datos relacionados\nde forma permanente. No es posible recuperar la información después de la eliminación.\nPara contratos que ya están activos o han sido utilizados, considere usar cambio de estado\nen lugar de eliminación física.\n\nSample request:\n\n    DELETE /api/Contrato/1\n    DELETE /api/Contrato/150",
         "parameters": [
           {
             "name": "IdContrato",
@@ -442,45 +564,55 @@
             "required": true,
             "schema": {
               "type": "integer",
-              "format": "int64"
+              "format": "int32"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Contrato eliminado exitosamente.",
+            "description": "Contrato eliminado exitosamente junto con todos sus registros relacionados.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.DeleteContrato_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.DeleteContrato_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.DeleteContrato_Result"
                 }
               }
             }
           },
-          "404": {
-            "description": "Contrato no encontrado.",
+          "400": {
+            "description": "ID de contrato inválido. El ID debe ser un número positivo mayor a 0.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
-              },
-              "text/json": {
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Contrato no encontrado. No existe un contrato con el ID especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto. El contrato no puede ser eliminado porque no está en estado \"En creación\" (102001) o tiene dependencias que no permiten su eliminación.",
+            "content": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -488,7 +620,14 @@
             }
           },
           "500": {
-            "description": "Error interno del servidor."
+            "description": "Error interno del servidor al eliminar el contrato.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -740,8 +879,8 @@
         "tags": [
           "ContratoCums"
         ],
-        "summary": "Obtiene la lista de CUMS asociados a un contrato específico.",
-        "description": "Este endpoint permite consultar todos los CUMS registrados para un contrato, filtrando por el identificador del contrato.",
+        "summary": "Obtiene la lista de CUMS (medicamentos y suministros) asociados a un contrato específico.",
+        "description": "Este endpoint permite consultar todos los CUMS registrados para un contrato, filtrando por el identificador del contrato.\n\n**Información retornada:**\n- Código CUMS del medicamento o suministro\n- Descripción y nombre comercial\n- Principio activo\n- Concentración y forma farmacéutica\n- Valor unitario y modalidades de pago asociadas\n- Cantidad contratada\n\n**Validaciones:**\n- El IdContrato debe ser un número positivo mayor a 0\n- El contrato debe existir en la base de datos\n\nSample request:\n\n    GET /api/ContratoCums/ByIdContrato/1\n    GET /api/ContratoCums/ByIdContrato/150",
         "parameters": [
           {
             "name": "IdContrato",
@@ -755,27 +894,54 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de CUMS obtenida exitosamente.",
+            "description": "Lista de CUMS obtenida exitosamente con toda la información de medicamentos y suministros del contrato.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.ListContratoCumsByIdContrato_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.ListContratoCumsByIdContrato_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.ListContratoCumsByIdContrato_Result"
                 }
               }
             }
           },
+          "400": {
+            "description": "ID de contrato inválido. El ID debe ser un número positivo mayor a 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
           "404": {
-            "description": "No se encontraron CUMS para el contrato especificado."
+            "description": "Contrato no encontrado o sin CUMS asociados.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al obtener la lista de CUMS.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -785,8 +951,8 @@
         "tags": [
           "ContratoCums"
         ],
-        "summary": "Obtiene el detalle de un CUMS de contrato por su identificador.",
-        "description": "Este endpoint devuelve la información detallada de un CUMS de contrato específico, incluyendo datos de medicamento o insumo.",
+        "summary": "Obtiene el detalle completo de un CUMS de contrato por su identificador.",
+        "description": "Este endpoint devuelve información detallada y completa de un CUMS de contrato específico, incluyendo:\n\n**Información del medicamento/suministro:**\n- Código CUMS completo\n- Nombre genérico y comercial\n- Principio activo y composición\n- Concentración y forma farmacéutica\n- Vía de administración\n- Presentación comercial\n\n**Información contractual:**\n- Identificador del contrato asociado\n- Valor unitario pactado\n- Cantidad contratada\n- Modalidades de pago aplicables\n- Vigencia de la asociación\n\n**Validaciones:**\n- El IdContratoCums debe ser un número positivo mayor a 0\n- El registro debe existir en la base de datos\n\nSample request:\n\n    GET /api/ContratoCums/1\n    GET /api/ContratoCums/250",
         "parameters": [
           {
             "name": "IdContratoCums",
@@ -800,27 +966,54 @@
         ],
         "responses": {
           "200": {
-            "description": "Detalle del CUMS obtenido exitosamente.",
+            "description": "Detalle del CUMS obtenido exitosamente con toda la información relacionada.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContratoCums_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContratoCums_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContratoCums_Result"
                 }
               }
             }
           },
+          "400": {
+            "description": "ID de CUMS inválido. El ID debe ser un número positivo mayor a 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
           "404": {
-            "description": "No se encontró el CUMS solicitado."
+            "description": "CUMS de contrato no encontrado. No existe un registro con el ID especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al obtener el detalle del CUMS.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       },
@@ -828,8 +1021,8 @@
         "tags": [
           "ContratoCums"
         ],
-        "summary": "Elimina un CUMS de contrato por su identificador.",
-        "description": "Este endpoint permite eliminar un CUMS de contrato existente, identificándolo por su ID único.",
+        "summary": "Elimina permanentemente un CUMS de contrato del sistema por su identificador.",
+        "description": "Este endpoint permite eliminar un CUMS de contrato específico del sistema de forma permanente.\nEsta operación es irreversible y debe usarse con precaución.\n\n**Restricciones importantes:**\n- Solo se permiten eliminaciones de CUMS en contratos que estén en estado \"En creación\" (102001)\n- Los CUMS de contratos en estados Activo, Terminado o Inactivo no pueden eliminarse\n- El CUMS debe existir en la base de datos\n- El IdContratoCums debe ser un número positivo mayor a 0\n\n**Validaciones automáticas:**\n1. El IdContratoCums debe ser mayor a 0\n2. El CUMS debe existir en la base de datos\n3. El contrato asociado debe estar en estado \"En creación\" (102001)\n\n**Eliminaciones en cascada:**\n\nAl eliminar un CUMS de contrato, se eliminarán automáticamente todos los registros relacionados:\n- **ContratoCumsModalidadPago**: Todas las modalidades de pago asociadas al CUMS\n\n**Nota importante:** Esta operación elimina el CUMS y TODOS sus datos relacionados\nde forma permanente. No es posible recuperar la información después de la eliminación.\nPara contratos que ya están activos, considere usar cambio de estado en lugar de eliminación física.\n\nSample request:\n\n    DELETE /api/ContratoCums/1\n    DELETE /api/ContratoCums/250",
         "parameters": [
           {
             "name": "IdContratoCums",
@@ -843,27 +1036,64 @@
         ],
         "responses": {
           "200": {
-            "description": "CUMS eliminado exitosamente.",
+            "description": "CUMS eliminado exitosamente junto con todos sus registros relacionados.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.DeleteContratoCums_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.DeleteContratoCums_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.DeleteContratoCums_Result"
                 }
               }
             }
           },
+          "400": {
+            "description": "ID de CUMS inválido. El ID debe ser un número positivo mayor a 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
           "404": {
-            "description": "No se encontró el CUMS a eliminar."
+            "description": "CUMS de contrato no encontrado. No existe un registro con el ID especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto. El CUMS no puede ser eliminado porque el contrato no está en estado \"En creación\" (102001) o tiene dependencias que no permiten su eliminación.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al eliminar el CUMS.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -873,10 +1103,10 @@
         "tags": [
           "ContratoCums"
         ],
-        "summary": "Registra un nuevo CUMS para un contrato.",
-        "description": "Este endpoint permite crear un nuevo registro de CUMS asociado a un contrato, especificando los datos requeridos como código, descripción y cantidad.",
+        "summary": "Registra un nuevo CUMS (medicamento o suministro) asociado a un contrato.",
+        "description": "Este endpoint permite crear un nuevo registro de CUMS vinculado a un contrato con validaciones automáticas de integridad.\n\n**Datos requeridos:**\n- **IdContrato**: Identificador del contrato (debe existir)\n- **CodigoCums**: Código único del medicamento o suministro (debe existir en ReferenciaCums)\n- **ValorUnitario**: Valor unitario del CUMS (debe ser mayor a 0)\n- **Cantidad**: Cantidad contratada (debe ser mayor a 0)\n\n**Datos opcionales:**\n- **CodigoReferenciaModalidadPago**: Lista de modalidades de pago aplicables\n- **Observaciones**: Notas adicionales sobre el CUMS contratado\n\n**Validaciones automáticas aplicadas:**\n\n1. **Validación de existencia:**\n   - El IdContrato debe existir en la tabla Contrato\n   - El CodigoCums debe existir en la tabla ReferenciaCums\n\n2. **Validación de valores:**\n   - ValorUnitario debe ser mayor a 0\n   - Cantidad debe ser mayor a 0\n\n3. **Validación de duplicidad:**\n   - No puede existir el mismo CodigoCums asociado al mismo IdContrato\n\n4. **Validación de estado del contrato:**\n   - El contrato debe estar en estado \"En creación\" (102001) para permitir agregar CUMS\n\n**Registros creados:**\n- 1 registro en tabla ContratoCums\n- N registros en tabla ContratoCumsModalidadPago (si se especifican modalidades)\n\nSample request:\n\n    POST /api/ContratoCums\n    {\n        \"idContrato\": 1,\n        \"codigoCums\": \"19934455-1\",\n        \"valorUnitario\": 15000.50,\n        \"cantidad\": 1000,\n        \"codigoReferenciaModalidadPago\": [1, 2],\n        \"observaciones\": \"Medicamento de alto costo\"\n    }",
         "requestBody": {
-          "description": "Datos del CUMS a registrar.",
+          "description": "Comando con los datos del CUMS a registrar.",
           "content": {
             "application/json": {
               "schema": {
@@ -897,19 +1127,9 @@
         },
         "responses": {
           "200": {
-            "description": "CUMS registrado exitosamente.",
+            "description": "CUMS registrado exitosamente. Retorna el ID del nuevo registro.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.AddContratoCums_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.AddContratoCums_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.AddContratoCums_Result"
                 }
@@ -917,7 +1137,44 @@
             }
           },
           "400": {
-            "description": "Datos inválidos o faltantes en la solicitud."
+            "description": "Datos inválidos o validaciones fallidas. El detalle incluye la lista de errores de validación con el campo y el mensaje correspondiente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto. Ya existe un CUMS con el mismo código asociado al contrato o el contrato no está en estado editable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al crear el CUMS.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       },
@@ -926,9 +1183,9 @@
           "ContratoCums"
         ],
         "summary": "Actualiza la información de un CUMS de contrato existente.",
-        "description": "Este endpoint permite modificar los datos de un CUMS previamente registrado, como el código, la descripción o la cantidad.",
+        "description": "Este endpoint permite modificar los datos de un CUMS previamente registrado aplicando las mismas\nvalidaciones que en la creación del CUMS.\n\n**Restricciones importantes:**\n- Solo se permiten actualizaciones en contratos que estén en estado \"En creación\" (102001)\n- Los contratos en estados Activo, Terminado o Inactivo no pueden modificar sus CUMS\n- El CUMS debe existir en la base de datos\n\n**Campos actualizables:**\n- **CodigoCums**: Código del medicamento o suministro (debe existir en ReferenciaCums)\n- **ValorUnitario**: Valor unitario del CUMS (debe ser mayor a 0)\n- **Cantidad**: Cantidad contratada (debe ser mayor a 0)\n- **CodigoReferenciaModalidadPago**: Lista de modalidades de pago\n- **Observaciones**: Notas adicionales\n\n**Validaciones automáticas aplicadas:**\n\n1. **Validación de existencia:**\n   - El IdContratoCums debe existir en la base de datos\n   - El CodigoCums debe existir en ReferenciaCums\n\n2. **Validación de valores:**\n   - ValorUnitario debe ser mayor a 0\n   - Cantidad debe ser mayor a 0\n\n3. **Validación de duplicidad:**\n   - No puede existir otro registro (diferente al actual) con el mismo CodigoCums para el mismo contrato\n\n4. **Validación de estado:**\n   - El contrato asociado debe estar en estado \"En creación\" (102001)\n\n**Operaciones realizadas:**\n- Actualización del registro en tabla ContratoCums\n- Eliminación de registros antiguos en ContratoCumsModalidadPago\n- Creación de nuevos registros de modalidades de pago según los datos proporcionados\n\nSample request:\n\n    PUT /api/ContratoCums\n    {\n        \"idContratoCums\": 1,\n        \"idContrato\": 1,\n        \"codigoCums\": \"19934455-1\",\n        \"valorUnitario\": 16500.00,\n        \"cantidad\": 1500,\n        \"codigoReferenciaModalidadPago\": [1, 2, 3],\n        \"observaciones\": \"Actualización de precio y cantidad\"\n    }",
         "requestBody": {
-          "description": "Datos actualizados del CUMS.",
+          "description": "Comando con los datos actualizados del CUMS. Debe incluir el IdContratoCums.",
           "content": {
             "application/json": {
               "schema": {
@@ -949,30 +1206,64 @@
         },
         "responses": {
           "200": {
-            "description": "CUMS actualizado exitosamente.",
+            "description": "CUMS actualizado exitosamente. Retorna el ID del registro modificado.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.UpdateContratoCums_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.UpdateContratoCums_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Commands.UpdateContratoCums_Result"
                 }
               }
             }
           },
-          "404": {
-            "description": "No se encontró el CUMS a actualizar."
-          },
           "400": {
-            "description": "Datos inválidos en la solicitud."
+            "description": "Datos inválidos o validaciones fallidas. El detalle incluye la lista de errores de validación.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. El token de autenticación es inválido, expiró o no se proporcionó.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "CUMS de contrato no encontrado. No existe un registro con el ID especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto. El CUMS no puede ser editado porque el contrato no está en estado \"En creación\" (102001) o porque generaría un código duplicado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al actualizar el CUMS.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -2196,18 +2487,47 @@
         }
       }
     },
-    "/api/ContratoOperacion/ByIdContrato/{IdContrato}": {
+    "/api/ContratoOperacion/ByIdContrato": {
       "get": {
         "tags": [
           "ContratoOperacion"
         ],
-        "summary": "Obtiene la lista de operaciones asociadas a un contrato específico.",
-        "description": "Este endpoint permite consultar todas las operaciones registradas para un contrato, filtrando por el identificador del contrato.",
+        "summary": "Obtiene una lista paginada de operaciones asociadas a un contrato específico con filtros opcionales.",
+        "description": "Este endpoint permite consultar las operaciones de cobertura geográfica y poblacional registradas para un contrato.\n\n**Filtros disponibles:**\n- **IdContrato**: Identificador del contrato (obligatorio en el query string)\n- **CodigoMunicipio**: Filtro opcional por código de municipio\n- **CodigoDepartamento**: Filtro opcional por código de departamento\n- **NumeroPagina**: Número de página para paginación (debe ser mayor a 0, default: 1)\n- **RegistrosPorPagina**: Cantidad de registros por página (debe ser mayor a 0 y menor o igual a 100, default: 10)\n\n**Información devuelta por cada operación:**\n- Identificador de la operación (IdContratoOperacion)\n- Identificador del contrato (IdContrato)\n- Código y nombre del municipio (si aplica según el alcance)\n- Código y nombre del departamento (si aplica según el alcance)\n- Población cubierta (número de personas)\n- Fecha de registro de la operación\n\nLos resultados se ordenan por fecha de registro descendente y se devuelven paginados con metadatos que incluyen:\n- Total de registros encontrados\n- Total de páginas disponibles\n- Página actual\n- Registros por página\n\n**Validaciones:**\n- IdContrato es obligatorio y debe ser mayor a 0\n- NumeroPagina debe ser mayor a 0 (si se proporciona)\n- RegistrosPorPagina debe ser mayor a 0 y no superar 100 (si se proporciona)\n\nSample request:\n\n    GET /api/ContratoOperacion/ByIdContrato?IdContrato=1&NumeroPagina=1&RegistrosPorPagina=10\n    GET /api/ContratoOperacion/ByIdContrato?IdContrato=1&CodigoDepartamento=25\n    GET /api/ContratoOperacion/ByIdContrato?IdContrato=1&CodigoMunicipio=25001",
         "parameters": [
           {
             "name": "IdContrato",
-            "in": "path",
-            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "CodigoMunicipio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CodigoDepartamento",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "NumeroPagina",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "RegistrosPorPagina",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -2216,27 +2536,44 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de operaciones obtenida exitosamente.",
+            "description": "Lista paginada de operaciones obtenida exitosamente.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.ListContratoOperacionByIdContrato_Result"
-                }
-              },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.ListContratoOperacionByIdContrato_Result"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.ListContratoOperacionByIdContrato_Result"
+                  "$ref": "#/components/schemas/PaginadorGenerico_ResultContratoOperacion"
                 }
               }
             }
           },
-          "404": {
-            "description": "No se encontraron operaciones para el contrato especificado."
+          "400": {
+            "description": "Parámetros de consulta inválidos. Verifique que IdContrato sea mayor a 0 y que los parámetros de paginación cumplan con los límites.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. Token de autenticación inválido o no proporcionado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al procesar la consulta.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -2246,8 +2583,8 @@
         "tags": [
           "ContratoOperacion"
         ],
-        "summary": "Obtiene el detalle de una operación de contrato por su identificador.",
-        "description": "Este endpoint devuelve la información detallada de una operación de contrato específica, incluyendo datos relevantes de la transacción o movimiento.",
+        "summary": "Obtiene los detalles completos de una operación de contrato por su identificador.",
+        "description": "Este endpoint devuelve información detallada de una operación de contrato específica, incluyendo:\n\n**Información básica:**\n- Identificador de la operación (IdContratoOperacion)\n- Identificador del contrato asociado (IdContrato)\n- Código de alcance (CodigoAlcance)\n- Descripción del tipo de alcance (Nacional, Departamental o Municipal)\n\n**Información geográfica:**\n- Código y nombre del municipio (para alcance municipal)\n- Código y nombre del departamento (para alcance departamental o municipal)\n\n**Información de cobertura:**\n- Población cubierta (número de personas)\n- Fecha de registro de la operación\n\n**Validaciones:**\n- El IdContratoOperacion debe ser un número positivo mayor a 0\n- La operación debe existir en la base de datos\n\nSample request:\n\n    GET /api/ContratoOperacion/1\n    GET /api/ContratoOperacion/150",
         "parameters": [
           {
             "name": "IdContratoOperacion",
@@ -2261,27 +2598,54 @@
         ],
         "responses": {
           "200": {
-            "description": "Detalle de la operación obtenido exitosamente.",
+            "description": "Detalles de la operación obtenidos exitosamente con toda la información relacionada.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.DetailContratoOperacion_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.DetailContratoOperacion_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.DetailContratoOperacion_Result"
                 }
               }
             }
           },
+          "400": {
+            "description": "ID de operación inválido. El ID debe ser un número positivo mayor a 0.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. Token de autenticación inválido o no proporcionado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
           "404": {
-            "description": "No se encontró la operación solicitada."
+            "description": "Operación no encontrada. No existe una operación con el ID especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al obtener los detalles de la operación.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       },
@@ -2290,7 +2654,7 @@
           "ContratoOperacion"
         ],
         "summary": "Elimina una operación de contrato por su identificador.",
-        "description": "Este endpoint permite eliminar una operación de contrato existente, identificándola por su ID único.",
+        "description": "Este endpoint permite eliminar una operación de cobertura geográfica y poblacional de un contrato.\nSolo se pueden eliminar operaciones de contratos en estado \"En creación\" (102001).\n\n**Restricciones:**\n- El contrato asociado debe estar en estado 102001 (En creación)\n- La operación debe existir en la base de datos\n\n**Validaciones automáticas aplicadas:**\n\n1. **Validación de existencia:**\n   - El IdContratoOperacion debe corresponder a una operación existente\n\n2. **Validación de estado:**\n   - El contrato asociado debe estar en estado 102001\n   - No se pueden eliminar operaciones de contratos en otros estados\n\n**Nota importante:**\n- La eliminación es permanente y no se puede deshacer\n- Al eliminar una operación, se libera la restricción de duplicados\n  (ej: se puede volver a registrar el mismo municipio o alcance nacional)\n\nSample request:\n\n    DELETE /api/ContratoOperacion/1\n    DELETE /api/ContratoOperacion/150",
         "parameters": [
           {
             "name": "IdContratoOperacion",
@@ -2304,27 +2668,64 @@
         ],
         "responses": {
           "200": {
-            "description": "Operación eliminada exitosamente.",
+            "description": "Operación eliminada exitosamente. Retorna confirmación de la eliminación.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Commands.DeleteContratoOperacion_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Commands.DeleteContratoOperacion_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Commands.DeleteContratoOperacion_Result"
                 }
               }
             }
           },
+          "400": {
+            "description": "ID de operación inválido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. Token de autenticación inválido o no proporcionado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
           "404": {
-            "description": "No se encontró la operación a eliminar."
+            "description": "Operación no encontrada. No existe una operación con el ID especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto. El contrato no permite eliminaciones en su estado actual.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al eliminar la operación.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -2334,10 +2735,10 @@
         "tags": [
           "ContratoOperacion"
         ],
-        "summary": "Registra una nueva operación para un contrato.",
-        "description": "Este endpoint permite crear un nuevo registro de operación asociada a un contrato, especificando los datos requeridos.",
+        "summary": "Registra una nueva operación de cobertura geográfica y poblacional para un contrato.",
+        "description": "Este endpoint permite crear un nuevo registro de operación que define el alcance de cobertura de un contrato.\nEl contrato debe estar en estado \"En creación\" (102001) para permitir el registro.\n\n**Datos requeridos:**\n- **IdContrato**: Identificador del contrato (debe existir y estar en estado 102001)\n- **CodigoAlcance**: Código del tipo de alcance del dominio 7 (107001, 107002 o 107003)\n\n**Datos condicionales según el tipo de alcance:**\n\n**Para alcance Nacional (107001):**\n- CodigoDepartamento: Debe ser NULL\n- CodigoMunicipio: Debe ser NULL\n- PoblacionCubierta: Debe ser NULL\n- Solo se permite UN registro de alcance nacional por contrato\n\n**Para alcance Departamental (107002):**\n- CodigoDepartamento: OBLIGATORIO (debe existir en dbo.ReferenciaDepartamento)\n- CodigoMunicipio: Debe ser NULL\n- PoblacionCubierta: Debe ser NULL\n\n**Para alcance Municipal (107003):**\n- CodigoDepartamento: OBLIGATORIO (debe existir en dbo.ReferenciaDepartamento)\n- CodigoMunicipio: OBLIGATORIO (debe existir en dbo.ReferenciaMunicipio)\n- PoblacionCubierta: OBLIGATORIO (debe ser mayor a 0)\n- No se permiten duplicados del mismo municipio en el contrato\n\n**Validaciones automáticas aplicadas:**\n\n1. **Validación de alcance:**\n   - El CodigoAlcance debe existir en el dominio 7 de CODIGO_REFERENCIA\n   - El código debe estar activo\n\n2. **Validación de estado:**\n   - El contrato debe estar en estado 102001 (En creación)\n\n3. **Validación de duplicados:**\n   - Para alcance nacional: solo un registro por contrato\n   - Para alcance municipal: no duplicar mismo municipio\n\n4. **Validación de población:**\n   - Si se proporciona PoblacionCubierta, debe ser mayor a 0\n\nSample request:\n\n    POST /api/ContratoOperacion\n    {\n      \"idContrato\": 1,\n      \"codigoAlcance\": 107003,\n      \"codigoDepartamento\": \"25\",\n      \"codigoMunicipio\": \"25001\",\n      \"poblacionCubierta\": 100000\n    }",
         "requestBody": {
-          "description": "Datos de la operación a registrar.",
+          "description": "Objeto con los datos de la operación a registrar.",
           "content": {
             "application/json": {
               "schema": {
@@ -2358,19 +2759,9 @@
         },
         "responses": {
           "200": {
-            "description": "Operación registrada exitosamente.",
+            "description": "Operación registrada exitosamente. Retorna el ID de la operación creada y el ID del contrato.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Commands.AddContratoOperacion_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Commands.AddContratoOperacion_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Commands.AddContratoOperacion_Result"
                 }
@@ -2378,7 +2769,44 @@
             }
           },
           "400": {
-            "description": "Datos inválidos o faltantes en la solicitud."
+            "description": "Datos inválidos. Verifique las validaciones según el tipo de alcance.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. Token de autenticación inválido o no proporcionado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto. Ya existe un registro con la misma configuración de alcance.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al registrar la operación.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       },
@@ -2387,9 +2815,9 @@
           "ContratoOperacion"
         ],
         "summary": "Actualiza la información de una operación de contrato existente.",
-        "description": "Este endpoint permite modificar los datos de una operación previamente registrada para un contrato.",
+        "description": "Este endpoint permite modificar los datos de una operación de cobertura previamente registrada.\nEl contrato debe estar en estado \"En creación\" (102001) para permitir modificaciones.\n\n**Datos requeridos:**\n- **IdContratoOperacion**: Identificador de la operación a actualizar (debe existir)\n- **CodigoAlcance**: Código del tipo de alcance del dominio 7 (107001, 107002 o 107003)\n\n**Datos condicionales según el tipo de alcance:**\n(Aplican las mismas reglas que en el registro, ver documentación de POST)\n\n**Restricciones:**\n- Solo se pueden modificar operaciones de contratos en estado 102001 (En creación)\n- No se permiten duplicados al actualizar (excepto el registro actual)\n- Para alcance nacional: solo puede existir un registro por contrato\n- Para alcance municipal: no puede duplicar municipios existentes\n\n**Validaciones automáticas aplicadas:**\n\n1. **Validación de existencia:**\n   - La operación debe existir en la base de datos\n\n2. **Validación de alcance:**\n   - El CodigoAlcance debe existir en el dominio 7 y estar activo\n\n3. **Validación de estado:**\n   - El contrato asociado debe estar en estado 102001\n\n4. **Validación de campos según alcance:**\n   - Nacional: departamento, municipio y población deben ser NULL\n   - Departamental: departamento obligatorio, municipio y población NULL\n   - Municipal: departamento, municipio y población obligatorios (población > 0)\n\nSample request:\n\n    PUT /api/ContratoOperacion\n    {\n      \"idContratoOperacion\": 1,\n      \"codigoAlcance\": 107003,\n      \"codigoDepartamento\": \"25\",\n      \"codigoMunicipio\": \"25754\",\n      \"poblacionCubierta\": 150000\n    }",
         "requestBody": {
-          "description": "Datos actualizados de la operación.",
+          "description": "Objeto con los datos actualizados de la operación.",
           "content": {
             "application/json": {
               "schema": {
@@ -2410,30 +2838,64 @@
         },
         "responses": {
           "200": {
-            "description": "Operación actualizada exitosamente.",
+            "description": "Operación actualizada exitosamente. Retorna el IdContratoOperacion y el IdContrato.",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Commands.UpdateContratoOperacion_Result"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Commands.UpdateContratoOperacion_Result"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Commands.UpdateContratoOperacion_Result"
                 }
               }
             }
           },
-          "404": {
-            "description": "No se encontró la operación a actualizar."
-          },
           "400": {
-            "description": "Datos inválidos en la solicitud."
+            "description": "Datos inválidos. Verifique las validaciones según el tipo de alcance.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado. Token de autenticación inválido o no proporcionado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Operación no encontrada. No existe una operación con el ID especificado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto. Ya existe otro registro con la misma configuración de alcance o el contrato no permite modificaciones.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor al actualizar la operación.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -4247,7 +4709,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": {}
+        "additionalProperties": { }
       },
       "Minsalud.SIIFA.API.Contrato.Features.ContratoAnticipo.Commands.AddContratoAnticipo_Command": {
         "type": "object",
@@ -4577,13 +5039,22 @@
             "type": "integer",
             "format": "int32"
           },
+          "codigoAlcance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigoDepartamento": {
+            "type": "string",
+            "nullable": true
+          },
           "codigoMunicipio": {
             "type": "string",
             "nullable": true
           },
           "poblacionCubierta": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4619,13 +5090,22 @@
             "type": "integer",
             "format": "int64"
           },
+          "codigoAlcance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigoDepartamento": {
+            "type": "string",
+            "nullable": true
+          },
           "codigoMunicipio": {
             "type": "string",
             "nullable": true
           },
           "poblacionCubierta": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4645,12 +5125,6 @@
         "additionalProperties": false
       },
       "Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.DetailContratoOperacion_Result": {
-        "required": [
-          "codigoDepartamento",
-          "codigoMunicipio",
-          "nombreDepartamento",
-          "nombreMunicipio"
-        ],
         "type": "object",
         "properties": {
           "idContratoOperacion": {
@@ -4660,6 +5134,13 @@
           "idContrato": {
             "type": "integer",
             "format": "int32"
+          },
+          "codigoAlcance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alcance": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.DetailContratoOperacion_ResultCodigoReferencia"
           },
           "codigoMunicipio": {
             "type": "string",
@@ -4679,7 +5160,8 @@
           },
           "poblacionCubierta": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "fechaRegistro": {
             "type": "string",
@@ -4688,7 +5170,35 @@
         },
         "additionalProperties": false
       },
-      "Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.ListContratoOperacionByIdContrato_Result": {
+      "Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.DetailContratoOperacion_ResultCodigoReferencia": {
+        "type": "object",
+        "properties": {
+          "idCondigoReferencia": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.ListContratoOperacionByIdContrato_ResultCodigoReferencia": {
+        "type": "object",
+        "properties": {
+          "idCondigoReferencia": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.ListContratoOperacionByIdContrato_ResultContratoOperacion": {
         "required": [
           "codigoDepartamento",
           "codigoMunicipio",
@@ -4704,6 +5214,13 @@
           "idContrato": {
             "type": "integer",
             "format": "int32"
+          },
+          "codigoAlcance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alcance": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.ListContratoOperacionByIdContrato_ResultCodigoReferencia"
           },
           "codigoMunicipio": {
             "type": "string",
@@ -4723,7 +5240,8 @@
           },
           "poblacionCubierta": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "fechaRegistro": {
             "type": "string",
@@ -4786,6 +5304,31 @@
         },
         "additionalProperties": false
       },
+      "Minsalud.SIIFA.API.Features.CodigoReferenciaDominio.Queries.ListCodigoReferenciaDominio_Result": {
+        "type": "object",
+        "properties": {
+          "idCodigoReferenciaDominio": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unidadAnalisis": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "activo": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "Minsalud.SIIFA.API.Features.Contrato.Commands.AddContratoCums_Command": {
         "type": "object",
         "properties": {
@@ -4821,6 +5364,10 @@
       "Minsalud.SIIFA.API.Features.Contrato.Commands.AddContrato_Command": {
         "type": "object",
         "properties": {
+          "codigoTipoContrato": {
+            "type": "integer",
+            "format": "int32"
+          },
           "nitContratante": {
             "type": "integer",
             "format": "int32"
@@ -4850,11 +5397,23 @@
             "type": "number",
             "format": "double"
           },
-          "modalidadPago": {
-            "type": "integer",
-            "format": "int32"
+          "codigoReferenciaModalidadPago": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
           },
           "codigoReferenciaAgrupador": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "codigoReferenciaRegimen": {
             "type": "array",
             "items": {
               "type": "integer",
@@ -4890,7 +5449,7 @@
         "properties": {
           "idContrato": {
             "type": "integer",
-            "format": "int64"
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -4938,6 +5497,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "codigoTipoContrato": {
+            "type": "integer",
+            "format": "int32"
+          },
           "nitContratante": {
             "type": "integer",
             "format": "int32"
@@ -4967,12 +5530,23 @@
             "type": "number",
             "format": "double"
           },
-          "modalidadPago": {
-            "type": "integer",
-            "format": "int32",
+          "codigoReferenciaModalidadPago": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
             "nullable": true
           },
           "codigoReferenciaAgrupador": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "codigoReferenciaRegimen": {
             "type": "array",
             "items": {
               "type": "integer",
@@ -5064,13 +5638,26 @@
             "type": "integer",
             "format": "int32"
           },
+          "codigoTipoContrato": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipoContrato": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultCodigoReferenciaTipoContrato"
+          },
           "nitContratante": {
             "type": "integer",
             "format": "int32"
           },
+          "empresaContratante": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultEmpresa"
+          },
           "nitContratista": {
             "type": "integer",
             "format": "int32"
+          },
+          "empresaContratista": {
+            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultEmpresa"
           },
           "nombre": {
             "type": "string",
@@ -5093,25 +5680,49 @@
             "type": "number",
             "format": "double"
           },
-          "modalidadPago": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "cucon": {
             "type": "string",
             "nullable": true
           },
-          "empresaContratante": {
-            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultEmpresa"
+          "codigoReferenciaModalidadPago": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
           },
-          "empresaContratista": {
-            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultEmpresa"
+          "contratoModalidadPago": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultContratoModalidadPago"
+            },
+            "nullable": true
           },
-          "referenciaModalidadPago": {
-            "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultModalidadPago"
+          "codigoReferenciaAgrupador": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
           },
-          "regimenes": {
+          "contratoAgrupador": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultContratoAgrupador"
+            },
+            "nullable": true
+          },
+          "codigoReferenciaRegimen": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "contratoRegimen": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultContratoRegimen"
@@ -5122,14 +5733,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultOtroSi"
-            },
-            "nullable": true
-          },
-          "codigoReferenciaAgrupador": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
             },
             "nullable": true
           },
@@ -5160,24 +5763,69 @@
         },
         "additionalProperties": false
       },
-      "Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultContratoRegimen": {
+      "Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultCodigoReferenciaTipoContrato": {
         "type": "object",
         "properties": {
-          "codigoRegimen": {
+          "codigoTipoContrato": {
             "type": "integer",
             "format": "int32"
           },
           "descripcion": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultContratoAgrupador": {
+        "type": "object",
+        "properties": {
+          "idContratoAgrupador": {
+            "type": "integer",
+            "format": "int64"
           },
-          "fechaInicioAplicacion": {
-            "type": "string",
-            "format": "date-time"
+          "codigoAgrupador": {
+            "type": "integer",
+            "format": "int32"
           },
-          "fechaFinalizacionAplicacion": {
+          "descripcion": {
             "type": "string",
-            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultContratoModalidadPago": {
+        "type": "object",
+        "properties": {
+          "idContratoModalidadPago": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "codigoModalidadPago": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultContratoRegimen": {
+        "type": "object",
+        "properties": {
+          "idContratoRegimen": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "codigoRegimen": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -5191,20 +5839,6 @@
             "format": "int32"
           },
           "razonSocial": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Minsalud.SIIFA.API.Features.Contrato.Queries.DetailContrato_ResultModalidadPago": {
-        "type": "object",
-        "properties": {
-          "codigoModalidadPago": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "descripcion": {
             "type": "string",
             "nullable": true
           }
@@ -7661,20 +8295,54 @@
           }
         },
         "additionalProperties": false
+      },
+      "PaginadorGenerico_ResultContratoOperacion": {
+        "title": "PaginadorGenerico_ResultContratoOperacion",
+        "type": "object",
+        "properties": {
+          "paginaActual": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registrosPorPagina": {
+            "type": "integer",
+            "description": "Número de registros de la página devuelta.",
+            "format": "int32"
+          },
+          "totalRegistros": {
+            "type": "integer",
+            "description": "Total de registros de consulta.",
+            "format": "int32"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "description": "Total de páginas de la consulta.",
+            "format": "int32"
+          },
+          "resultado": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minsalud.SIIFA.API.Contrato.Features.ContratoOperacion.Queries.ListContratoOperacionByIdContrato_ResultContratoOperacion"
+            },
+            "description": "Columna por la que esta ordenada la consulta actual.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       }
     },
     "securitySchemes": {
       "Bearer": {
         "type": "http",
         "description": "Por favor ingrese un token válido",
-        "scheme": "bearer",
+        "scheme": "Bearer",
         "bearerFormat": "JWT"
       }
     }
   },
   "security": [
     {
-      "Bearer": []
+      "Bearer": [ ]
     }
   ]
 }
